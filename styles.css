@@ -277,8 +277,9 @@ h1 {
 
 .shot-gallery {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;
 }
+.shot-gallery li:nth-child(n+4) { /* wraps on wide */ }
 .shot-gallery figure {
   margin: 0; min-width: 0; overflow: hidden;
   border-radius: 16px; border: 1px solid var(--line);
