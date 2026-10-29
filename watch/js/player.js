@@ -57,6 +57,23 @@ function looksLikeHls(url) {
   return p.endsWith('.m3u8') || p.includes('.m3u8');
 }
 
+
+function waitForHls(ms = 4000) {
+  return new Promise((resolve) => {
+    if (window.Hls) return resolve(true);
+    const t0 = Date.now();
+    const id = setInterval(() => {
+      if (window.Hls) {
+        clearInterval(id);
+        resolve(true);
+      } else if (Date.now() - t0 > ms) {
+        clearInterval(id);
+        resolve(false);
+      }
+    }, 50);
+  });
+}
+
 function looksLikeMpegTs(url) {
   const p = url.split('?')[0].toLowerCase();
   // raw .ts segment playlists are HLS; lone .ts / mpegts paths often need mpegts.js
@@ -82,7 +99,7 @@ export function play(url, { userAgent } = {}) {
     });
   }
 
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     let settled = false;
     const done = (r) => {
       if (settled) return;
@@ -99,6 +116,10 @@ export function play(url, { userAgent } = {}) {
       onError(BROWSER_MSG, 'media_error');
     };
     videoEl.onplaying = () => done({ ok: true });
+
+    if (looksLikeHls(url) && !(window.Hls && window.Hls.isSupported()) && !videoEl.canPlayType('application/vnd.apple.mpegurl')) {
+      await waitForHls();
+    }
 
     // Native HLS (Safari)
     if (videoEl.canPlayType('application/vnd.apple.mpegurl') && looksLikeHls(url)) {
