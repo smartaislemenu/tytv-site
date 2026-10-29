@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tv generator-info-name="TYTV demo (made-up channels)">
+<channel id="metro.sports1"><display-name>Metro Sports 1</display-name><icon src="logos/metro.sports1.png"/></channel>
+<channel id="metro.sports2"><display-name>Metro Sports 2</display-name><icon src="logos/metro.sports2.png"/></channel>
+<channel id="coastal.news"><display-name>Coastal News 24</display-name><icon src="logos/coastal.news.png"/></channel>
+<channel id="summit.movies"><display-name>Summit Movies</display-name><icon src="logos/summit.movies.png"/></channel>
+<channel id="riverbend.kids"><display-name>Riverbend Kids</display-name><icon src="logos/riverbend.kids.png"/></channel>
+<channel id="harbor.classics"><display-name>Harbor Classics</display-name><icon src="logos/harbor.classics.png"/></channel>
+<channel id="nova.comedy"><display-name>Nova Comedy</display-name><icon src="logos/nova.comedy.png"/></channel>
+<channel id="pinewood.outdoors"><display-name>Pinewood Outdoors</display-name><icon src="logos/pinewood.outdoors.png"/></channel>
+<channel id="lakeside.weather"><display-name>Lakeside Weather</display-name><icon src="logos/lakeside.weather.png"/></channel>
+<channel id="brightline.music"><display-name>Brightline Music</display-name><icon src="logos/brightline.music.png"/></channel>
+<channel id="cedar.docs"><display-name>Cedar Documentaries</display-name><icon src="logos/cedar.docs.png"/></channel>
+<channel id="aurora.scifi"><display-name>Aurora Sci-Fi</display-name><icon src="logos/aurora.scifi.png"/></channel>
+<programme start="20261029010000 +0000" stop="20261029023000 +0000" channel="metro.sports1"><title>Pre-Game Desk</title><desc>Studio desk ahead of tip-off.</desc><category>Demo</category></programme>
+<programme start="20261029023000 +0000" stop="20261029050000 +0000" channel="metro.sports1"><title>Harbor City Hawks vs Lakeside Lynx</title><desc>Live basketball — made-up demo teams.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029060000 +0000" channel="metro.sports1"><title>Metro Sports Tonight</title><desc>Highlights and interviews.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029073000 +0000" channel="metro.sports1"><title>Court Side Replay</title><desc>Tonight's key plays.</desc><category>Demo</category></programme>
+<programme start="20261029073000 +0000" stop="20261029090000 +0000" channel="metro.sports1"><title>Pre-Game Desk</title><desc>Studio desk ahead of tip-off.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029113000 +0000" channel="metro.sports1"><title>Harbor City Hawks vs Lakeside Lynx</title><desc>Live basketball — made-up demo teams.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029023000 +0000" channel="metro.sports2"><title>Warmup Hour</title><desc>Skate and stretch.</desc><category>Demo</category></programme>
+<programme start="20261029023000 +0000" stop="20261029050000 +0000" channel="metro.sports2"><title>Riverbend Rapids vs Summit Storm</title><desc>Ice hockey — demo matchup.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029060000 +0000" channel="metro.sports2"><title>Post-Game Press</title><desc>Coaches and captains.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029073000 +0000" channel="metro.sports2"><title>Metro Scoreboard</title><desc>Scores from around the region.</desc><category>Demo</category></programme>
+<programme start="20261029073000 +0000" stop="20261029090000 +0000" channel="metro.sports2"><title>Warmup Hour</title><desc>Skate and stretch.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029113000 +0000" channel="metro.sports2"><title>Riverbend Rapids vs Summit Storm</title><desc>Ice hockey — demo matchup.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029020000 +0000" channel="coastal.news"><title>Coastal Evening Report</title><desc>Local headlines.</desc><category>Demo</category></programme>
+<programme start="20261029020000 +0000" stop="20261029030000 +0000" channel="coastal.news"><title>Harbor Traffic Watch</title><desc>Bridges and ferries.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029040000 +0000" channel="coastal.news"><title>Weather on the Bay</title><desc>Forecast with Lakeside.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029053000 +0000" channel="coastal.news"><title>Nightly Roundup</title><desc>What mattered today.</desc><category>Demo</category></programme>
+<programme start="20261029053000 +0000" stop="20261029063000 +0000" channel="coastal.news"><title>Coastal Evening Report</title><desc>Local headlines.</desc><category>Demo</category></programme>
+<programme start="20261029063000 +0000" stop="20261029073000 +0000" channel="coastal.news"><title>Harbor Traffic Watch</title><desc>Bridges and ferries.</desc><category>Demo</category></programme>
+<programme start="20261029073000 +0000" stop="20261029083000 +0000" channel="coastal.news"><title>Weather on the Bay</title><desc>Forecast with Lakeside.</desc><category>Demo</category></programme>
+<programme start="20261029083000 +0000" stop="20261029100000 +0000" channel="coastal.news"><title>Nightly Roundup</title><desc>What mattered today.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029040000 +0000" channel="summit.movies"><title>Glass Harbor</title><desc>A cartographer inherits a seaside glassworks.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029060000 +0000" channel="summit.movies"><title>The Last Lantern</title><desc>Two siblings race a storm to restore a lighthouse.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029080000 +0000" channel="summit.movies"><title>Paper Planes at Dusk</title><desc>A quiet coming-of-age in a hill town.</desc><category>Demo</category></programme>
+<programme start="20261029080000 +0000" stop="20261029110000 +0000" channel="summit.movies"><title>Glass Harbor</title><desc>A cartographer inherits a seaside glassworks.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029020000 +0000" channel="riverbend.kids"><title>Puddle Jump Patrol</title><desc>Friends map every splash in town.</desc><category>Demo</category></programme>
+<programme start="20261029020000 +0000" stop="20261029030000 +0000" channel="riverbend.kids"><title>Mossy Bridge Mysteries</title><desc>A talking raccoon solves tiny cases.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029040000 +0000" channel="riverbend.kids"><title>Sky Kite Academy</title><desc>Learn to fly kinder kites.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029050000 +0000" channel="riverbend.kids"><title>Bedtime Star Train</title><desc>Gentle rides across the constellation.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029060000 +0000" channel="riverbend.kids"><title>Puddle Jump Patrol</title><desc>Friends map every splash in town.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029070000 +0000" channel="riverbend.kids"><title>Mossy Bridge Mysteries</title><desc>A talking raccoon solves tiny cases.</desc><category>Demo</category></programme>
+<programme start="20261029070000 +0000" stop="20261029080000 +0000" channel="riverbend.kids"><title>Sky Kite Academy</title><desc>Learn to fly kinder kites.</desc><category>Demo</category></programme>
+<programme start="20261029080000 +0000" stop="20261029090000 +0000" channel="riverbend.kids"><title>Bedtime Star Train</title><desc>Gentle rides across the constellation.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029100000 +0000" channel="riverbend.kids"><title>Puddle Jump Patrol</title><desc>Friends map every splash in town.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029040000 +0000" channel="harbor.classics"><title>Letters from Pine Street</title><desc>1950s letters reconnect two towns.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029060000 +0000" channel="harbor.classics"><title>The Copper Compass</title><desc>A sailor trusts an heirloom over charts.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029080000 +0000" channel="harbor.classics"><title>Sunday at the Bandstand</title><desc>A park concert changes three summers.</desc><category>Demo</category></programme>
+<programme start="20261029080000 +0000" stop="20261029110000 +0000" channel="harbor.classics"><title>Letters from Pine Street</title><desc>1950s letters reconnect two towns.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029020000 +0000" channel="nova.comedy"><title>Open Mic at Nova</title><desc>Stand-up from made-up comics.</desc><category>Demo</category></programme>
+<programme start="20261029020000 +0000" stop="20261029030000 +0000" channel="nova.comedy"><title>Roommate Protocol</title><desc>Four roommates, one shared fridge AI.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029040000 +0000" channel="nova.comedy"><title>Queue Jumpers</title><desc>Friends game the bakery line.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029050000 +0000" channel="nova.comedy"><title>Nova Late</title><desc>Desk bits and sketches.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029060000 +0000" channel="nova.comedy"><title>Open Mic at Nova</title><desc>Stand-up from made-up comics.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029070000 +0000" channel="nova.comedy"><title>Roommate Protocol</title><desc>Four roommates, one shared fridge AI.</desc><category>Demo</category></programme>
+<programme start="20261029070000 +0000" stop="20261029080000 +0000" channel="nova.comedy"><title>Queue Jumpers</title><desc>Friends game the bakery line.</desc><category>Demo</category></programme>
+<programme start="20261029080000 +0000" stop="20261029090000 +0000" channel="nova.comedy"><title>Nova Late</title><desc>Desk bits and sketches.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029100000 +0000" channel="nova.comedy"><title>Open Mic at Nova</title><desc>Stand-up from made-up comics.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029023000 +0000" channel="pinewood.outdoors"><title>Trail Notes</title><desc>Weekend ridge walk.</desc><category>Demo</category></programme>
+<programme start="20261029023000 +0000" stop="20261029033000 +0000" channel="pinewood.outdoors"><title>Campfire Skills</title><desc>Knots, cocoa, and quiet.</desc><category>Demo</category></programme>
+<programme start="20261029033000 +0000" stop="20261029050000 +0000" channel="pinewood.outdoors"><title>River Kayak Day</title><desc>Paddle the Riverbend loop.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029062000 +0000" channel="pinewood.outdoors"><title>Stargaze Guide</title><desc>Find Aurora without apps.</desc><category>Demo</category></programme>
+<programme start="20261029062000 +0000" stop="20261029075000 +0000" channel="pinewood.outdoors"><title>Trail Notes</title><desc>Weekend ridge walk.</desc><category>Demo</category></programme>
+<programme start="20261029075000 +0000" stop="20261029085000 +0000" channel="pinewood.outdoors"><title>Campfire Skills</title><desc>Knots, cocoa, and quiet.</desc><category>Demo</category></programme>
+<programme start="20261029085000 +0000" stop="20261029102000 +0000" channel="pinewood.outdoors"><title>River Kayak Day</title><desc>Paddle the Riverbend loop.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029020000 +0000" channel="lakeside.weather"><title>Lakeside Live Radar</title><desc>Loops and alerts.</desc><category>Demo</category></programme>
+<programme start="20261029020000 +0000" stop="20261029030000 +0000" channel="lakeside.weather"><title>Seven-Day Outlook</title><desc>Mild nights ahead.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029040000 +0000" channel="lakeside.weather"><title>Marine Report</title><desc>Bay winds and tides.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029050000 +0000" channel="lakeside.weather"><title>Sunrise Timelapse</title><desc>Harbor colors.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029060000 +0000" channel="lakeside.weather"><title>Lakeside Live Radar</title><desc>Loops and alerts.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029070000 +0000" channel="lakeside.weather"><title>Seven-Day Outlook</title><desc>Mild nights ahead.</desc><category>Demo</category></programme>
+<programme start="20261029070000 +0000" stop="20261029080000 +0000" channel="lakeside.weather"><title>Marine Report</title><desc>Bay winds and tides.</desc><category>Demo</category></programme>
+<programme start="20261029080000 +0000" stop="20261029090000 +0000" channel="lakeside.weather"><title>Sunrise Timelapse</title><desc>Harbor colors.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029100000 +0000" channel="lakeside.weather"><title>Lakeside Live Radar</title><desc>Loops and alerts.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029020000 +0000" channel="brightline.music"><title>Morning Mix</title><desc>Instrumentals for the commute.</desc><category>Demo</category></programme>
+<programme start="20261029020000 +0000" stop="20261029030000 +0000" channel="brightline.music"><title>Harbor Sessions</title><desc>Live acoustic sets.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029040000 +0000" channel="brightline.music"><title>Nova Night Frequency</title><desc>Electronic deep cuts.</desc><category>Demo</category></programme>
+<programme start="20261029040000 +0000" stop="20261029050000 +0000" channel="brightline.music"><title>Quiet Hours</title><desc>Soft piano.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029060000 +0000" channel="brightline.music"><title>Morning Mix</title><desc>Instrumentals for the commute.</desc><category>Demo</category></programme>
+<programme start="20261029060000 +0000" stop="20261029070000 +0000" channel="brightline.music"><title>Harbor Sessions</title><desc>Live acoustic sets.</desc><category>Demo</category></programme>
+<programme start="20261029070000 +0000" stop="20261029080000 +0000" channel="brightline.music"><title>Nova Night Frequency</title><desc>Electronic deep cuts.</desc><category>Demo</category></programme>
+<programme start="20261029080000 +0000" stop="20261029090000 +0000" channel="brightline.music"><title>Quiet Hours</title><desc>Soft piano.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029100000 +0000" channel="brightline.music"><title>Morning Mix</title><desc>Instrumentals for the commute.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029030000 +0000" channel="cedar.docs"><title>Builders of the Bay</title><desc>How the ferry docks were made.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029050000 +0000" channel="cedar.docs"><title>Wild Orchards</title><desc>Heirloom apple keepers.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029070000 +0000" channel="cedar.docs"><title>Signal Hill</title><desc>The first coastal radio tower.</desc><category>Demo</category></programme>
+<programme start="20261029070000 +0000" stop="20261029090000 +0000" channel="cedar.docs"><title>Builders of the Bay</title><desc>How the ferry docks were made.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029110000 +0000" channel="cedar.docs"><title>Wild Orchards</title><desc>Heirloom apple keepers.</desc><category>Demo</category></programme>
+<programme start="20261029010000 +0000" stop="20261029030000 +0000" channel="aurora.scifi"><title>Orbit Courier</title><desc>Packages across three moons.</desc><category>Demo</category></programme>
+<programme start="20261029030000 +0000" stop="20261029050000 +0000" channel="aurora.scifi"><title>The Quiet Array</title><desc>A listening post hears something new.</desc><category>Demo</category></programme>
+<programme start="20261029050000 +0000" stop="20261029070000 +0000" channel="aurora.scifi"><title>Driftwood Station</title><desc>A crew reclaims a derelict hub.</desc><category>Demo</category></programme>
+<programme start="20261029070000 +0000" stop="20261029090000 +0000" channel="aurora.scifi"><title>Orbit Courier</title><desc>Packages across three moons.</desc><category>Demo</category></programme>
+<programme start="20261029090000 +0000" stop="20261029110000 +0000" channel="aurora.scifi"><title>The Quiet Array</title><desc>A listening post hears something new.</desc><category>Demo</category></programme>
+</tv>

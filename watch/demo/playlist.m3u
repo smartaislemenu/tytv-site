@@ -1,0 +1,37 @@
+#EXTM3U url-tvg="guide.xml"
+#EXTINF:-1 tvg-id="metro.sports1" tvg-logo="logos/metro.sports1.png" group-title="Live Sports",Metro Sports 1
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="metro.sports2" tvg-logo="logos/metro.sports2.png" group-title="Live Sports",Metro Sports 2
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="coastal.news" tvg-logo="logos/coastal.news.png" group-title="News",Coastal News 24
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="summit.movies" tvg-logo="logos/summit.movies.png" group-title="Movies",Summit Movies
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="riverbend.kids" tvg-logo="logos/riverbend.kids.png" group-title="Kids",Riverbend Kids
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="harbor.classics" tvg-logo="logos/harbor.classics.png" group-title="Movies",Harbor Classics
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="nova.comedy" tvg-logo="logos/nova.comedy.png" group-title="Shows",Nova Comedy
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="pinewood.outdoors" tvg-logo="logos/pinewood.outdoors.png" group-title="Lifestyle",Pinewood Outdoors
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="lakeside.weather" tvg-logo="logos/lakeside.weather.png" group-title="News",Lakeside Weather
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="brightline.music" tvg-logo="logos/brightline.music.png" group-title="Music",Brightline Music
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="cedar.docs" tvg-logo="logos/cedar.docs.png" group-title="Shows",Cedar Documentaries
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="aurora.scifi" tvg-logo="logos/aurora.scifi.png" group-title="Shows",Aurora Sci-Fi
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="vod.glassharbor" tvg-logo="posters/glass-harbor.png" group-title="Movies & Shows",Glass Harbor
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="vod.thelastlantern" tvg-logo="posters/the-last-lantern.png" group-title="Movies & Shows",The Last Lantern
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="vod.paperplanesatdusk" tvg-logo="posters/paper-planes-at-dusk.png" group-title="Movies & Shows",Paper Planes at Dusk
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="vod.lettersfrompinestreet" tvg-logo="posters/letters-from-pine-street.png" group-title="Movies & Shows",Letters from Pine Street
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="vod.thecoppercompass" tvg-logo="posters/the-copper-compass.png" group-title="Movies & Shows",The Copper Compass
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8
+#EXTINF:-1 tvg-id="vod.orbitcourier" tvg-logo="posters/orbit-courier.png" group-title="Movies & Shows",Orbit Courier
+https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8

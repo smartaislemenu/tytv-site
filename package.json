@@ -1,0 +1,8 @@
+{
+  "name": "tytv-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:watch": "node watch/tests/parsers.test.mjs"
+  }
+}
