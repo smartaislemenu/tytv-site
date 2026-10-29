@@ -20,3 +20,12 @@ Parking / default Porkbun records were removed.
 
 - Custom domain: `tytvapp.com` (repo `CNAME` file + Pages settings)
 - Enforce HTTPS after GitHub finishes issuing the cert
+
+## Short download URLs
+
+GitHub Pages ignores Netlify/Cloudflare `_redirects`. Use:
+
+- https://tytvapp.com/apk/
+- https://tytvapp.com/download/
+
+These are HTML redirect pages in the repo (`apk/index.html`, `download/index.html`).
