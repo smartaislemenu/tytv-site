@@ -37,7 +37,7 @@ const t0 = Date.now();
 const bigParsed = parseM3u(big.join('\n'), 'big');
 ok('2k parse fast', bigParsed.channels.length === 2000 && Date.now() - t0 < 500, Date.now() - t0);
 
-ok('live m3u8', classify('https://x/live/1.m3u8', 'CNN') === Type.LIVE);
+ok('live m3u8', classify('https://x/live/1.m3u8', 'Coastal News') === Type.LIVE);
 ok('movie path', classify('https://x/movie/1/file.mp4', 'Glass Harbor') === Type.MOVIE);
 ok('series path', classify('https://x/series/1/1/1.ts', 'Show S01E02') === Type.SERIES);
 ok('episode parse', parseEpisode('Harbor City S01 E02 Extra')?.season === 1);

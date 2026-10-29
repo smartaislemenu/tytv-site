@@ -1,7 +1,7 @@
 /**
  * Email + OTP unlock gate — same Worker API as the TV app License.kt.
  * When the Worker is unreachable: coming-soon mode (player stays locked).
- * ?demo=1 enables local demo unlock for QA only (not a real license).
+ * ?demo=1 opens a restricted demo (bundled made-up channels only — not a paid unlock).
  */
 const PREFS = 'tytv_web_license';
 export const LICENSE_API_BASE = ''; // set when Worker is live, e.g. https://license.tytvapp.com
@@ -21,7 +21,6 @@ export function deviceId() {
   const p = prefs();
   if (p.device_id) return p.device_id;
   const id = (crypto.randomUUID && crypto.randomUUID()) || 'web-' + Math.random().toString(36).slice(2) + Date.now();
-  // Prefix so admin can tell web devices apart when label/device_type lands in Worker
   const webId = id.startsWith('web-') ? id : 'web-' + id;
   writePrefs({ ...p, device_id: webId, device_type: 'web' });
   return webId;
@@ -33,10 +32,27 @@ export function normalizeEmail(s) {
   return e;
 }
 
+/** Paid/real unlock only. Demo mode is separate and never counts as a license. */
 export function isUnlocked() {
-  if (isDemoMode()) return true;
+  if (isDemoMode()) return false; // demo is not a license unlock
+  const base = LICENSE_API_BASE.trim();
+  if (!base) return false; // Worker not configured: ignore localStorage tricks
   const p = prefs();
   return !!(p.unlocked && p.email && String(p.email).includes('@'));
+}
+
+/** True when the URL explicitly asks for the made-up demo (?demo=1). Not persisted via sessionStorage. */
+export function isDemoMode() {
+  try {
+    return new URLSearchParams(location.search).get('demo') === '1';
+  } catch {
+    return false;
+  }
+}
+
+/** UI may show the player shell for demo OR a real unlock. */
+export function canUsePlayerShell() {
+  return isDemoMode() || isUnlocked();
 }
 
 export function storedEmail() {
@@ -59,17 +75,8 @@ export function clearLocal() {
   writePrefs({ device_id: id, device_type: 'web' });
 }
 
-export function isDemoMode() {
-  const q = new URLSearchParams(location.search);
-  if (q.get('demo') === '1') {
-    sessionStorage.setItem('tytv_demo', '1');
-    return true;
-  }
-  return sessionStorage.getItem('tytv_demo') === '1';
-}
-
 export function clearDemoMode() {
-  sessionStorage.removeItem('tytv_demo');
+  // Demo is URL-only; nothing to clear. Kept for callers.
 }
 
 async function postJson(path, body) {

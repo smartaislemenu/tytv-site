@@ -12,6 +12,24 @@ const DEMO_PLAYLIST = new URL('../demo/playlist.m3u', import.meta.url).href;
 const DEMO_GUIDE = new URL('../demo/guide.xml', import.meta.url).href;
 const DEMO_BASE = new URL('../demo/', import.meta.url).href;
 
+const DEMO_ONLY_MSG = 'Demo mode only plays the made-up demo channels.';
+
+function isDemoPlaylistMeta(meta) {
+  if (!meta || !meta.demo) return false;
+  if (meta.id && meta.id !== 'demo') return false;
+  const u = meta.url || '';
+  // Must be our bundled demo playlist URL (or empty during internal reload of already-fetched demo text)
+  if (u && !u.includes('/demo/playlist.m3u')) return false;
+  return true;
+}
+
+/** Hard gate: demo mode may only ingest the bundled demo playlist. */
+function assertPlaylistAllowed(meta) {
+  if (!License.isDemoMode()) return;
+  if (!isDemoPlaylistMeta(meta)) throw new Error(DEMO_ONLY_MSG);
+}
+
+
 const state = {
   screen: 'gate', // gate | home | guide | movies | shows | sports | favorites | all | group | settings | profiles | add | search | player
   groupKey: 'HOME',
@@ -77,6 +95,16 @@ function now() {
 /* ---------------- data load ---------------- */
 
 async function loadPlaylistText(text, meta) {
+  if (License.isDemoMode()) {
+    // Always re-fetch the bundled demo — ignore caller text/URL/localStorage tricks
+    meta = { id: 'demo', name: 'TYTV Demo', type: 'M3U', demo: true, url: DEMO_PLAYLIST };
+    assertPlaylistAllowed(meta);
+    const res = await fetch(DEMO_PLAYLIST, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Demo playlist missing');
+    text = await res.text();
+  } else {
+    assertPlaylistAllowed(meta || {});
+  }
   const id = meta.id || Store.uid('pl');
   const parsed = parseM3u(text, id);
   if (!parsed.channels.length) throw new Error('No channels found in that playlist.');
@@ -101,8 +129,14 @@ async function loadPlaylistText(text, meta) {
     password: '', // never persist password
     epgUrl: meta.epgUrl || parsed.epgUrls[0] || '',
   };
-  state.persist.playlists = [pl];
-  Store.save(state.persist);
+  if (License.isDemoMode()) {
+    // Demo must not restore or keep user playlists
+    state.persist.playlists = [];
+    Store.save(state.persist);
+  } else {
+    state.persist.playlists = [pl];
+    Store.save(state.persist);
+  }
 
   // EPG
   const epgCandidates = [];
@@ -135,13 +169,11 @@ async function loadPlaylistText(text, meta) {
 }
 
 async function loadDemo() {
-  const res = await fetch(DEMO_PLAYLIST);
-  if (!res.ok) throw new Error('Demo playlist missing');
-  const text = await res.text();
-  await loadPlaylistText(text, { id: 'demo', name: 'TYTV Demo', type: 'M3U', demo: true, url: DEMO_PLAYLIST });
+  await loadPlaylistText('', { id: 'demo', name: 'TYTV Demo', type: 'M3U', demo: true, url: DEMO_PLAYLIST });
 }
 
 async function fetchRemotePlaylist(url) {
+  if (License.isDemoMode()) throw new Error(DEMO_ONLY_MSG);
   if (location.protocol === 'https:' && url.startsWith('http:')) {
     throw new Error("Browsers block insecure (http) playlist links on this site. Use https, or the TV app.");
   }
@@ -357,6 +389,10 @@ function renderPlayerError() {
 /* ---------------- render ---------------- */
 
 function navigate(screen, opts = {}) {
+  if (License.isDemoMode() && (screen === 'add' || screen === 'add-playlist')) {
+    toast(DEMO_ONLY_MSG);
+    return;
+  }
   state.screen = screen;
   if (opts.groupKey) state.groupKey = opts.groupKey;
   if (opts.groupName) state.groupName = opts.groupName;
@@ -446,6 +482,10 @@ function cardVod(v) {
 
 function renderHome() {
   if (!state.channels.length && !state.movies.length) {
+    if (License.isDemoMode()) {
+      return `<div class="empty"><h2>Demo with made-up channels</h2>
+        <p>This demo only includes the bundled sample playlist.</p></div>`;
+    }
     return `<div class="empty"><h2>Add a playlist</h2>
       <p>Paste your M3U link or Xtream login — same as the TV app.</p>
       <button class="btn btn-primary" type="button" data-nav="add">Add playlist</button></div>`;
@@ -576,6 +616,7 @@ function renderSettings() {
   const demo = License.isDemoMode();
   return `<div class="topbar"><h1>Settings</h1></div>
     <div class="panel-card" style="margin:0;max-width:560px">
+      ${demo ? `<div class="coming" style="margin-bottom:14px"><strong>Demo with made-up channels.</strong> Playlist add is turned off in demo.</div>` : ''}
       <div class="field"><label>Home layout</label>
         <select id="homeLayout">
           <option value="featured" ${state.persist.homeLayout !== 'classic' ? 'selected' : ''}>Featured</option>
@@ -583,12 +624,12 @@ function renderSettings() {
         </select>
       </div>
       <div class="field"><label>Account</label>
-        <div class="hint">${demo ? 'Demo mode (QA). Not a paid unlock.' : License.storedEmail() || 'Not signed in'}</div>
+        <div class="hint">${demo ? 'Demo with made-up channels — not a paid unlock.' : License.storedEmail() || 'Not signed in'}</div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn btn-primary" type="button" data-nav="add">Add / replace playlist</button>
-        <button class="btn btn-ghost" type="button" data-act="reload-demo">Load demo playlist</button>
-        <button class="btn btn-danger" type="button" data-act="signout">Sign out</button>
+        ${demo ? '' : `<button class="btn btn-primary" type="button" data-nav="add">Add / replace playlist</button>
+        <button class="btn btn-ghost" type="button" data-act="reload-demo">Load demo playlist</button>`}
+        <button class="btn btn-danger" type="button" data-act="signout">${demo ? 'Leave demo' : 'Sign out'}</button>
       </div>
       <p class="hint" style="margin-top:16px">Streams that use plain http, or that block browser requests, show a friendly message and work in the TV app instead. TYTV never proxies your streams.</p>
     </div>`;
@@ -614,6 +655,13 @@ function renderProfiles() {
 }
 
 function renderAdd() {
+  if (License.isDemoMode()) {
+    return `<div class="topbar"><h1>Add playlist</h1></div>
+      <div class="panel-card" style="margin:0;max-width:520px">
+        <div class="coming"><strong>Demo with made-up channels.</strong> ${escapeHtml(DEMO_ONLY_MSG)}</div>
+        <button class="btn btn-primary" type="button" data-nav="home">Back to Home</button>
+      </div>`;
+  }
   return `<div class="topbar"><h1>Add playlist</h1></div>
     <div class="panel-card" style="margin:0;max-width:520px">
       <div class="tabs">
@@ -651,8 +699,7 @@ function renderGate() {
     ${
       coming
         ? `<div class="coming"><strong>Coming soon.</strong> Payments and email codes aren't live yet.
-           Download the TV app on <a href="/">tytvapp.com</a>. For a look at the web UI, QA can open
-           <code>?demo=1</code> (demo playlist only — not a real unlock).</div>`
+           Download the TV app on <a href="/">tytvapp.com</a>.</div>`
         : ''
     }
     ${
@@ -754,7 +801,8 @@ function mainBody() {
 }
 
 function render() {
-  if (!state.unlocked) {
+  if (!License.canUsePlayerShell()) {
+    state.unlocked = false;
     appRoot.innerHTML = renderGate();
     bind();
     return;
@@ -769,7 +817,7 @@ function render() {
   const showDetail = ['sports', 'favorites', 'all', 'group'].includes(state.screen);
   appRoot.innerHTML = `<div class="app">${renderRail()}
     <div class="layout-with-detail" style="flex:1;min-width:0">
-      <div class="main"><div class="main-scroll">${mainBody()}</div></div>
+      <div class="main">${License.isDemoMode() ? `<div class="coming" style="margin:12px 22px 0;max-width:none"><strong>Demo with made-up channels.</strong> Sample content only — not a paid unlock.</div>` : ''}<div class="main-scroll">${mainBody()}</div></div>
       ${showDetail ? renderDetail() : ''}
     </div>
   </div>`;
@@ -854,7 +902,10 @@ function bind() {
       }
       state.unlocked = true;
       state.screen = 'home';
-      if (!state.channels.length) await loadDemo().catch(() => navigate('add'));
+      if (!state.channels.length) {
+        if (License.isDemoMode()) await loadDemo().catch((e) => toast(String(e.message || e)));
+        else navigate('add');
+      }
       render();
       return;
     }
@@ -881,10 +932,31 @@ function bind() {
       state.unlocked = false;
       state.otpStep = 'email';
       state.channels = [];
+      state.movies = [];
+      state.shows = [];
+      state.groups = [];
+      state.epg = new Map();
+      if (License.isDemoMode() || new URLSearchParams(location.search).get('demo') === '1') {
+        // Drop ?demo=1 so the public gate shows
+        location.href = new URL('.', location.href).pathname.replace(/\/?$/, '/') || '/watch/';
+        return;
+      }
       render();
       return;
     }
     if (act === 'reload-demo') {
+      // In demo mode the bundled demo is already loaded; ignore add-from-settings paths.
+      if (License.isDemoMode()) {
+        try {
+          await loadDemo();
+          state.screen = 'home';
+          toast('Demo with made-up channels');
+          render();
+        } catch (err) {
+          toast(String(err.message || err));
+        }
+        return;
+      }
       try {
         await loadDemo();
         state.screen = 'home';
@@ -901,6 +973,10 @@ function bind() {
       return;
     }
     if (act === 'submit-playlist') {
+      if (License.isDemoMode()) {
+        toast(DEMO_ONLY_MSG);
+        return;
+      }
       const err = $('#addErr');
       err?.classList.add('hidden');
       try {
@@ -1012,13 +1088,17 @@ async function boot() {
   state.licenseAvailable = !!health.available;
 
   if (License.isDemoMode()) {
+    // Restricted shell: bundled demo only. Ignore localStorage playlists / unlock flags.
     state.unlocked = true;
+    state.persist.playlists = [];
+    Store.save(state.persist);
     try {
       await loadDemo();
       state.screen = 'home';
     } catch (e) {
       console.error(e);
-      state.screen = 'add';
+      state.screen = 'home';
+      toast(String(e.message || e));
     }
     render();
     return;
@@ -1026,8 +1106,6 @@ async function boot() {
 
   if (License.isUnlocked()) {
     state.unlocked = true;
-    state.screen = 'home';
-    // try restore — without stored playlist URL content, offer add / demo
     state.screen = 'add';
     render();
     License.heartbeat();
