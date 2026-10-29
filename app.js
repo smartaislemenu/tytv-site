@@ -1,18 +1,17 @@
 (function () {
-  var year = document.getElementById('year');
-  if (year) year.textContent = String(new Date().getFullYear());
-
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var tabs = document.querySelectorAll('[role="tab"]');
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
-      tabs.forEach(function (t) {
-        t.classList.remove('is-active');
-        t.setAttribute('aria-selected', 'false');
+      var group = tab.getAttribute('aria-controls');
+      if (!group) return;
+      var list = tab.parentElement;
+      list.querySelectorAll('[role="tab"]').forEach(function (t) {
+        t.classList.toggle('is-active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
       });
-      tab.classList.add('is-active');
-      tab.setAttribute('aria-selected', 'true');
-      document.querySelectorAll('.panel').forEach(function (p) {
-        var on = p.id === tab.getAttribute('aria-controls');
+      var panelsRoot = list.parentElement.querySelector('.panels') || document;
+      panelsRoot.querySelectorAll('[role="tabpanel"]').forEach(function (p) {
+        var on = p.id === group;
         p.classList.toggle('is-active', on);
         if (on) p.removeAttribute('hidden');
         else p.setAttribute('hidden', '');
@@ -20,21 +19,15 @@
     });
   });
 
-  fetch('https://api.github.com/repos/smartaislemenu/tytv-app/releases/latest', {
-    headers: { Accept: 'application/vnd.github+json' }
-  }).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-    if (!data) return;
-    var tag = (data.tag_name || '').replace(/^v/, '');
-    if (tag) {
-      var v1 = document.getElementById('rel-version');
-      var v2 = document.getElementById('rel-version-2');
-      if (v1) v1.textContent = tag;
-      if (v2) v2.textContent = tag;
-    }
-    var m = (data.body || '').match(/sha256:\s*([a-f0-9]{64})/i);
-    if (m) {
-      var sha = document.getElementById('rel-sha');
-      if (sha) { sha.textContent = m[1]; sha.title = m[1]; }
-    }
-  }).catch(function () {});
+  var y = document.getElementById('year');
+  if (y) y.textContent = String(new Date().getFullYear());
+
+  var toggle = document.querySelector('.mobile-nav-toggle');
+  var nav = document.querySelector('.nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
 })();

@@ -1,3 +1,6 @@
-# Cloudflare Pages: short path for Firestick Downloader
-/apk   https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk   302
-/download   https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk   302
+/apk /downloads/TYTV.apk 302
+/apk/ /downloads/TYTV.apk 302
+/download /downloads/TYTV.apk 302
+/download/ /downloads/TYTV.apk 302
+/privacy.html /privacy 308
+/guides /guides/ 301

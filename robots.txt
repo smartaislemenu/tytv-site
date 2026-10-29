@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /watch/
+Sitemap: https://tytvapp.com/sitemap.xml

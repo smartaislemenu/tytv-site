@@ -1,9 +1,10 @@
 /**
- * HLS / native playback with mixed-content and CORS detection.
+ * HLS / MPEG-TS / native playback with mixed-content and CORS detection.
  * No stream proxy — browsers that block http-on-https or CORS get a friendly message.
  */
 
 let hls = null;
+let mpegtsPlayer = null;
 let videoEl = null;
 
 export function attachVideo(el) {
@@ -19,9 +20,24 @@ export function stop() {
     }
     hls = null;
   }
+  if (mpegtsPlayer) {
+    try {
+      mpegtsPlayer.pause();
+      mpegtsPlayer.unload();
+      mpegtsPlayer.detachMediaElement();
+      mpegtsPlayer.destroy();
+    } catch {
+      /* ignore */
+    }
+    mpegtsPlayer = null;
+  }
   if (videoEl) {
     videoEl.removeAttribute('src');
-    videoEl.load();
+    try {
+      videoEl.load();
+    } catch {
+      /* ignore */
+    }
   }
 }
 
@@ -41,6 +57,15 @@ function looksLikeHls(url) {
   return p.endsWith('.m3u8') || p.includes('.m3u8');
 }
 
+function looksLikeMpegTs(url) {
+  const p = url.split('?')[0].toLowerCase();
+  // raw .ts segment playlists are HLS; lone .ts / mpegts paths often need mpegts.js
+  if (p.endsWith('.m3u8')) return false;
+  return p.endsWith('.ts') || p.includes('mpegts') || p.includes('/ts/') || /[?&]format=ts\b/i.test(url);
+}
+
+const BROWSER_MSG = "This stream can't play in a browser — use the TV app";
+
 /**
  * @returns {Promise<{ ok: boolean, error?: string, reason?: string }>}
  */
@@ -53,7 +78,7 @@ export function play(url, { userAgent } = {}) {
     return Promise.resolve({
       ok: false,
       reason: 'mixed_content',
-      error: "This stream can't play in a browser — use the TV app",
+      error: BROWSER_MSG,
     });
   }
 
@@ -71,7 +96,7 @@ export function play(url, { userAgent } = {}) {
     };
 
     videoEl.onerror = () => {
-      onError("This stream can't play in a browser — use the TV app", 'media_error');
+      onError(BROWSER_MSG, 'media_error');
     };
     videoEl.onplaying = () => done({ ok: true });
 
@@ -108,12 +133,10 @@ export function play(url, { userAgent } = {}) {
       hls.on(window.Hls.Events.ERROR, (_e, data) => {
         if (!data.fatal) return;
         let reason = 'hls_error';
-        let msg = "This stream can't play in a browser — use the TV app";
         if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR) {
           reason = 'cors_or_network';
-          msg = "This stream can't play in a browser — use the TV app";
         }
-        onError(msg, reason);
+        onError(BROWSER_MSG, reason);
       });
       setTimeout(() => {
         if (!settled) done({ ok: true }); // may still be buffering
@@ -121,12 +144,39 @@ export function play(url, { userAgent } = {}) {
       return;
     }
 
-    // Progressive / other
+    // mpegts.js for MPEG-TS / raw .ts live-style URLs
+    if (
+      looksLikeMpegTs(url) &&
+      window.mpegts &&
+      window.mpegts.getFeatureList &&
+      window.mpegts.getFeatureList().mseLivePlayback
+    ) {
+      try {
+        mpegtsPlayer = window.mpegts.createPlayer(
+          { type: 'mse', isLive: true, url },
+          { enableWorker: true, stashInitialSize: 128 }
+        );
+        mpegtsPlayer.attachMediaElement(videoEl);
+        mpegtsPlayer.load();
+        mpegtsPlayer.play().catch(() => {});
+        mpegtsPlayer.on(window.mpegts.Events.ERROR, () => {
+          onError(BROWSER_MSG, 'mpegts_error');
+        });
+        setTimeout(() => {
+          if (!settled) done({ ok: true });
+        }, 8000);
+        return;
+      } catch {
+        /* fall through */
+      }
+    }
+
+    // Progressive MP4 / other
     videoEl.src = url;
-    videoEl.play().catch(() => onError("This stream can't play in a browser — use the TV app", 'play_rejected'));
+    videoEl.play().catch(() => onError(BROWSER_MSG, 'play_rejected'));
     setTimeout(() => {
       if (!settled && videoEl.error) {
-        onError("This stream can't play in a browser — use the TV app", 'media_error');
+        onError(BROWSER_MSG, 'media_error');
       } else if (!settled) done({ ok: true });
     }, 5000);
   });

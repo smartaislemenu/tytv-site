@@ -36,12 +36,14 @@
         <img class="logo-img" src="assets/logo-128.webp" width="40" height="40" alt="" decoding="async">
         <span class="logo-text">TYTV</span>
       </a>
-      <nav class="nav" aria-label="Primary">
+      <button class="mobile-nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">☰</button>
+      <nav class="nav" id="site-nav" aria-label="Primary">
         <a href="#features">Features</a>
-        <a href="#screens">Screens</a>
+        <a href="/guides/">Guides</a>
         <a href="#install">Install</a>
         <a href="#faq">FAQ</a>
         <a href="watch/">Watch</a>
+        <a href="#support">Support</a>
         <a class="nav-cta" href="#download">Download</a>
       </nav>
     </div>
@@ -59,13 +61,11 @@
           </p>
           <p class="trust">TYTV doesn’t include any channels. You bring the playlist.</p>
           <div class="hero-actions" id="download">
-            <a class="btn btn-primary"
-               href="https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk"
-               download>
+            <a class="btn btn-primary" href="/downloads/TYTV.apk" download>
               <span class="btn-icon" aria-hidden="true">↓</span>
               Download for Android TV
             </a>
-            <a class="btn btn-ghost" href="#install">How to install</a>
+            <a class="btn btn-ghost" href="/guides/">Install guides</a>
           </div>
           <dl class="release-meta" aria-label="Latest release">
             <div>
@@ -82,8 +82,8 @@
             </div>
           </dl>
           <p class="fineprint">
-            Direct from
-            <a href="https://github.com/smartaislemenu/tytv-app/releases/latest" rel="noopener">GitHub Releases</a>.
+            Direct from <a href="/downloads/TYTV.apk">this site</a>.
+            Short link for Fire TV Downloader: <a href="/apk/">tytvapp.com/apk</a>.
             No account required.
           </p>
         </div>
@@ -112,6 +112,7 @@
         <strong>Onn Google TV</strong>
         <strong>Android TV</strong>
         <strong>Fire TV Stick</strong>
+        <strong>Web browser</strong>
       </div>
     </section>
 
@@ -230,7 +231,7 @@
         <div class="section-head">
           <p class="section-kicker">Install</p>
           <h2>On the TV in three steps</h2>
-          <p class="section-lede">Allow unknown apps once, download the APK, then add your playlist.</p>
+          <p class="section-lede">Quick start below — or open the <a href="/guides/">full guide for your device</a> (Onn, Google TV, Fire Stick, Shield, phone, iPhone, web).</p>
         </div>
 
         <div class="tabs" role="tablist" aria-label="Device type">
@@ -243,7 +244,7 @@
             <ol class="steps steps-3">
               <li>
                 <h3>Allow unknown apps</h3>
-                <p><strong>Settings → Apps → Special app access → Install unknown apps</strong>. Turn on your browser.</p>
+                <p><strong>Settings → Apps → Special app access → Install unknown apps</strong>. Turn on your browser. Menus can vary by model.</p>
               </li>
               <li>
                 <h3>Download TYTV</h3>
@@ -254,6 +255,7 @@
                 <p>Tap Install. If Play Protect warns you, choose Install anyway. Open TYTV and paste your M3U playlist.</p>
               </li>
             </ol>
+            <p class="fineprint"><a href="/guides/onn/">Full Onn guide</a> · <a href="/guides/google-tv/">Chromecast / Google TV</a> · <a href="/guides/android-tv/">Shield &amp; other boxes</a></p>
           </div>
           <div class="panel" role="tabpanel" id="panel-fire" aria-labelledby="tab-fire" hidden>
             <ol class="steps steps-3">
@@ -270,12 +272,12 @@
                 <p>Tap Install, open TYTV under Your Apps, then add your own M3U playlist.</p>
               </li>
             </ol>
+            <p class="fineprint"><a href="/guides/fire-tv/">Full Fire TV guide</a></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Pricing slot reserved for later (not shown; pricing not approved yet) -->
     <section class="section pricing-slot" id="pricing" hidden aria-hidden="true">
       <div class="wrap">
         <div class="section-head">
@@ -298,7 +300,7 @@
           </details>
           <details>
             <summary>Is it free?</summary>
-            <p>Yes. Download the APK from GitHub Releases at no charge.</p>
+            <p>Yes. Download the Android TV APK from this site at no charge.</p>
           </details>
           <details>
             <summary>Will Play Protect or Amazon warn me?</summary>
@@ -306,12 +308,41 @@
           </details>
           <details>
             <summary>How do updates work?</summary>
-            <p>New versions publish on GitHub Releases. Open TYTV on the box to pick up an update, or download again from this site.</p>
+            <p>New versions publish on this site. Open TYTV on the box to pick up an update, or download again from here.</p>
           </details>
           <details>
             <summary>iPhone or iPad?</summary>
-            <p>This download is for Android TV (Onn, Google TV, Fire TV Stick). The iPhone app is separate via TestFlight / the App Store when available.</p>
+            <p>Coming soon on the App Store. This download is for Android TV (Onn, Google TV, Fire TV Stick). See the <a href="/guides/iphone/">iPhone guide</a>.</p>
           </details>
+          <details>
+            <summary>Can I watch in a browser?</summary>
+            <p>Yes — try <a href="/watch/">TYTV Watch</a>. Email unlock is coming soon; some streams only work in the TV app because of browser security rules. <a href="/guides/web/">Web guide</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="support">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-kicker">Support</p>
+          <h2>Need a hand?</h2>
+          <p class="section-lede">Install guides first — most setup questions are answered there. Still stuck? Email us.</p>
+        </div>
+        <div class="support-block">
+          <div class="support-card">
+            <h3>Install guides</h3>
+            <p>Step-by-step for Onn, Fire Stick, Google TV, Shield, phones, iPhone, and the web player.</p>
+            <p style="margin-top:.75rem"><a href="/guides/">Open guides →</a></p>
+          </div>
+          <div class="support-card">
+            <h3>Email</h3>
+            <p>Write to <a href="mailto:smartaislemenu@gmail.com">smartaislemenu@gmail.com</a>. Include your device type and what you already tried.</p>
+          </div>
+          <div class="support-card">
+            <h3>Privacy</h3>
+            <p>Playlists stay on your device. Read the <a href="/privacy">privacy policy</a>.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -320,15 +351,14 @@
       <div class="wrap cta-inner">
         <h2>Ready for the living room?</h2>
         <p class="section-lede cta-lede">Free download. Your playlist. Your TV.</p>
-        <a class="btn btn-primary"
-           href="https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk"
-           download>
+        <a class="btn btn-primary" href="/downloads/TYTV.apk" download>
           <span class="btn-icon" aria-hidden="true">↓</span>
           Download TYTV.apk
         </a>
         <p class="fineprint">Latest: <span id="rel-version-2">1.2.17</span> ·
-          <a href="https://github.com/smartaislemenu/tytv-app" rel="noopener">Source on GitHub</a>
+          <a href="/downloads/TYTV.apk">Download again</a>
           · Short link <a href="/apk/">tytvapp.com/apk</a>
+          · <a href="/guides/">Guides</a>
         </p>
       </div>
     </section>
@@ -345,14 +375,18 @@
       </div>
       <div class="footer-links">
         <a href="#features">Features</a>
+        <a href="/guides/">Guides</a>
         <a href="#install">Install</a>
         <a href="#faq">FAQ</a>
-        <a href="https://github.com/smartaislemenu/tytv-app/releases/latest" rel="noopener">Releases</a>
-        <a href="https://github.com/smartaislemenu/tytv-app" rel="noopener">GitHub</a>
+        <a href="watch/">Watch</a>
+        <a href="/downloads/TYTV.apk">Download</a>
+        <a href="/privacy">Privacy</a>
+        <a href="#support">Support</a>
       </div>
       <p class="fineprint footer-legal">
-        Not affiliated with Google, Amazon, Walmart, or any streaming service.
-        No trackers. © <span id="year"></span> TYTV.
+        Not affiliated with Google, Amazon, Walmart, Apple, or any streaming service.
+        No trackers. © <span id="year"></span> TYTV ·
+        <a href="mailto:smartaislemenu@gmail.com">smartaislemenu@gmail.com</a>
       </p>
     </div>
   </footer>

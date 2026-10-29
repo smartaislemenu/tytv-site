@@ -763,7 +763,10 @@ function renderGate() {
            <button class="btn btn-primary" type="button" data-act="verify-otp">Unlock</button>
            <button class="btn btn-ghost" type="button" data-act="otp-back" style="margin-left:8px">Back</button>`
     }
-    <p class="hint" style="margin-top:18px"><a href="/">← Back to tytvapp.com</a></p>
+    <p class="hint" style="margin-top:18px">
+      <a href="?demo=1">Try the free demo with made-up channels</a>
+      · <a href="/">← Back to tytvapp.com</a>
+    </p>
   </div>`;
 }
 

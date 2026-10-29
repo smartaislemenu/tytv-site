@@ -30,7 +30,7 @@ async function shot(page, name) {
   await page.waitForTimeout(500);
   const text = await page.textContent('#app');
   ok('gate coming soon', /Coming soon/i.test(text||''));
-  ok('gate no demo hint', !/\?demo=1/i.test(text||'') && !/QA/i.test(text||''));
+  ok('gate has try-demo link', /Try the free demo|\?demo=1/i.test(text||'') && !/\bQA\b/i.test(text||''));
   await shot(page, 'desktop-gate-coming-soon.png');
 
   // localStorage unlock trick must NOT open player
