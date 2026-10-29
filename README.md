@@ -2,9 +2,10 @@
 
 Static one-page site for downloading the TYTV Android TV app (APK).
 
-**Live:** https://smartaislemenu.github.io/tytv-site/
+**Live:** https://tytvapp.com  
+Also: https://smartaislemenu.github.io/tytv-site/ (redirects once custom domain is active)
 
-Custom domain (`tytvapp.com`) is pending DNS after Cloudflare purchase — no CNAME in this repo yet.
+Domain registered at **Porkbun** (`tytvapp.com`). DNS A/CNAME records point at GitHub Pages.
 
 ## What’s here
 
