@@ -5,9 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0C1A38">
-  <meta name="description" content="TYTV — a free playlist player for Android TV, Onn boxes, and Fire TV Stick. Live TV guide, sports, movies, and shows. Bring your own M3U playlist.">
+  <title>TYTV — Free playlist player for Android TV</title>
+  <meta name="description" content="TYTV is a free playlist player for Android TV, Onn boxes, and Fire TV Stick. Live TV guide, sports, movies and shows with posters, favorites, and profiles. Bring your own M3U playlist — TYTV doesn’t include any channels.">
   <meta name="robots" content="index,follow">
-  <title>TYTV — Download for Android TV</title>
+  <link rel="canonical" href="https://tytvapp.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tytvapp.com/">
+  <meta property="og:title" content="TYTV — Free playlist player for Android TV">
+  <meta property="og:description" content="Live TV guide, sports, movies and shows. Bring your own playlist. Free for Onn, Google TV, and Fire TV Stick.">
+  <meta property="og:image" content="https://tytvapp.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TYTV — Free playlist player for Android TV">
+  <meta name="twitter:description" content="Your TV. Your playlist. One simple app.">
+  <meta name="twitter:image" content="https://tytvapp.com/assets/og.png">
   <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -16,6 +28,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="bg-glow" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="wrap header-inner">
@@ -24,10 +37,11 @@
         <span class="logo-text">TYTV</span>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="#download">Download</a>
-        <a href="#install">Install</a>
         <a href="#features">Features</a>
+        <a href="#screens">Screens</a>
+        <a href="#install">Install</a>
         <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#download">Download</a>
       </nav>
     </div>
   </header>
@@ -36,16 +50,18 @@
     <section class="hero" id="top">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Free · Android TV · Onn · Fire TV Stick</p>
-          <h1>Your TV. Your playlist.<br><span class="accent">One simple app.</span></h1>
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span> Free · Android TV · Onn · Fire TV Stick</p>
+          <h1>Your TV.<br>Your playlist.<br><span class="accent">One simple app.</span></h1>
           <p class="lede">
-            TYTV is a playlist player for living-room TVs. Add your own M3U playlist and get a live TV guide,
-            sports, movies and shows with posters, favorites, and profiles — built for a remote, not a phone.
+            TYTV is a playlist player built for the living room. Add your own M3U playlist and get a live TV guide,
+            sports, movies and shows with posters, favorites, and profiles — controlled with a remote, not a phone.
           </p>
+          <p class="trust">TYTV doesn’t include any channels. You bring the playlist.</p>
           <div class="hero-actions" id="download">
             <a class="btn btn-primary"
                href="https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk"
                download>
+              <span class="btn-icon" aria-hidden="true">↓</span>
               Download for Android TV
             </a>
             <a class="btn btn-ghost" href="#install">How to install</a>
@@ -67,45 +83,129 @@
           <p class="fineprint">
             Direct from
             <a href="https://github.com/smartaislemenu/tytv-app/releases/latest" rel="noopener">GitHub Releases</a>.
-            No account required. You bring your own playlist — TYTV does not include any channels or movies.
+            No account required.
           </p>
         </div>
-        <aside class="hero-card">
-          <figure class="tv-frame">
-            <img
-              class="tv-shot"
-              src="assets/guide.webp"
-              width="1280"
-              height="720"
-              alt="TYTV TV Guide on Android TV showing live sports channels and what’s on now"
-              decoding="async"
-              fetchpriority="high">
-            <figcaption class="tv-caption">TV Guide · live sports</figcaption>
-          </figure>
+        <aside class="hero-visual">
+          <div class="tv-stage">
+            <div class="tv-glow" aria-hidden="true"></div>
+            <figure class="tv-frame">
+              <img
+                class="tv-shot"
+                src="assets/guide.webp"
+                width="1400"
+                height="787"
+                alt="TYTV TV Guide on Android TV showing live sports channels and what’s on now"
+                decoding="async"
+                fetchpriority="high">
+            </figure>
+            <p class="tv-caption">TV Guide · live sports</p>
+          </div>
         </aside>
       </div>
     </section>
 
-    <section class="section section-gallery" id="screens" aria-label="App screenshots">
+    <section class="section logos-strip" aria-label="Works on">
+      <div class="wrap strip-inner">
+        <span>Made for</span>
+        <strong>Onn Google TV</strong>
+        <strong>Android TV</strong>
+        <strong>Fire TV Stick</strong>
+      </div>
+    </section>
+
+    <section class="section" id="features">
       <div class="wrap">
-        <h2 class="gallery-heading">Inside the app</h2>
+        <div class="section-head">
+          <p class="section-kicker">Features</p>
+          <h2>Built for the 10-foot UI</h2>
+          <p class="section-lede">Big focus rings, clear rows, and posters you can read from the couch. Designed for a remote.</p>
+        </div>
+        <ul class="feature-grid">
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 18v2"/><path d="M7 8h4M7 12h10"/></svg>
+            </span>
+            <h3>Live TV guide</h3>
+            <p>See what’s on now and next. Jump to now, browse by group, and keep favorites pinned.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <h3>Sports first</h3>
+            <p>Live Sports rows, scores, and your teams up front so game night starts in one click.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="12" height="18" rx="2"/><path d="M8 7h4M8 11h4M8 15h2"/></svg>
+            </span>
+            <h3>Movies &amp; shows</h3>
+            <p>Poster art for movies and series so you can spot what you want from across the room.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4l2.2 4.5 5 .7-3.6 3.5.9 5L12 15.8 7.5 17.7l.9-5L4.8 9.2l5-.7L12 4z"/></svg>
+            </span>
+            <h3>Favorites</h3>
+            <p>Pin the channels and titles you actually watch. Hold OK for quick actions.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 19c1.5-3 4-4.5 7-4.5S17.5 16 19 19"/></svg>
+            </span>
+            <h3>Profiles</h3>
+            <p>Separate profiles so each person keeps their home layout, favorites, and picks.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h10"/><circle cx="17" cy="9" r="1.2" fill="currentColor"/></svg>
+            </span>
+            <h3>Featured or Classic</h3>
+            <p>Pick Featured (hero + curated rows) or Classic home — switch anytime in Settings → Look.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12h2M17 12h2M7.05 7.05l1.4 1.4M15.55 15.55l1.4 1.4M7.05 16.95l1.4-1.4M15.55 8.45l1.4-1.4"/></svg>
+            </span>
+            <h3>Remote-friendly</h3>
+            <p>D-pad focus you can see from 10 feet. Built for Onn, Android TV, and Fire TV Stick remotes.</p>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16v10H4z"/><path d="M8 17v2M16 17v2M12 7V5"/><path d="M9 12h6"/></svg>
+            </span>
+            <h3>Your playlist</h3>
+            <p>Works with your M3U URL or file. TYTV is the player — you choose the content.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="screens">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="section-kicker">Inside the app</p>
+          <h2>See it on the big screen</h2>
+          <p class="section-lede">Real screenshots from TYTV on an Onn box — no stock mockups.</p>
+        </div>
         <ul class="shot-gallery">
           <li>
             <figure>
-              <img src="assets/guide.webp" width="1100" height="618" alt="TV Guide grid with live sports and Jump to now" loading="lazy" decoding="async">
+              <img src="assets/guide.webp" width="1400" height="787" alt="TV Guide grid with live sports and Jump to now" loading="lazy" decoding="async">
               <figcaption>TV Guide</figcaption>
             </figure>
           </li>
           <li>
             <figure>
-              <img src="assets/settings-look.webp" width="1100" height="618" alt="Settings Look screen with Classic and Featured home layouts and themes" loading="lazy" decoding="async">
-              <figcaption>Settings · Look</figcaption>
+              <img src="assets/home.webp" width="1200" height="675" alt="Classic home with live sports and recently added titles" loading="lazy" decoding="async">
+              <figcaption>Home</figcaption>
             </figure>
           </li>
           <li>
             <figure>
-              <img src="assets/home.webp" width="1100" height="618" alt="Classic home with live sports and recently added shows" loading="lazy" decoding="async">
-              <figcaption>Home</figcaption>
+              <img src="assets/settings-look.webp" width="1200" height="675" alt="Settings Look with Classic and Featured layouts and themes" loading="lazy" decoding="async">
+              <figcaption>Settings · Look</figcaption>
             </figure>
           </li>
         </ul>
@@ -114,8 +214,11 @@
 
     <section class="section" id="install">
       <div class="wrap">
-        <h2>Install in a few minutes</h2>
-        <p class="section-lede">Pick your box. You’ll allow installs from unknown apps once, then open TYTV and add your playlist.</p>
+        <div class="section-head">
+          <p class="section-kicker">Install</p>
+          <h2>On the TV in three steps</h2>
+          <p class="section-lede">Allow unknown apps once, download the APK, then add your playlist.</p>
+        </div>
 
         <div class="tabs" role="tablist" aria-label="Device type">
           <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-onn" id="tab-onn" type="button">Onn / Google TV</button>
@@ -124,45 +227,34 @@
 
         <div class="panels">
           <div class="panel is-active" role="tabpanel" id="panel-onn" aria-labelledby="tab-onn">
-            <ol class="steps">
+            <ol class="steps steps-3">
               <li>
                 <h3>Allow unknown apps</h3>
-                <p>Open <strong>Settings → Apps → Special app access → Install unknown apps</strong>. Choose your browser (Chrome or the built-in browser) and turn <strong>Allow from this source</strong> on.</p>
+                <p><strong>Settings → Apps → Special app access → Install unknown apps</strong>. Turn on your browser.</p>
               </li>
               <li>
-                <h3>Open this page on the TV</h3>
-                <p>On the TV browser, go to this site and tap <strong>Download for Android TV</strong>. Or open the GitHub release and download <code>TYTV.apk</code>.</p>
+                <h3>Download TYTV</h3>
+                <p>Open <strong>tytvapp.com</strong> on the TV and tap Download — or go to <code>tytvapp.com/apk</code>.</p>
               </li>
               <li>
-                <h3>Install the APK</h3>
-                <p>When the download finishes, open it and tap <strong>Install</strong>. If Play Protect warns you, choose <strong>Install anyway</strong> — the file is the official build from our GitHub release (check the SHA-256 above if you want).</p>
-              </li>
-              <li>
-                <h3>Open TYTV and add your playlist</h3>
-                <p>Launch TYTV from your apps row. Paste your M3U playlist URL or load a local file. Nothing is preloaded — you choose the playlist.</p>
+                <h3>Install &amp; add playlist</h3>
+                <p>Tap Install. If Play Protect warns you, choose Install anyway. Open TYTV and paste your M3U playlist.</p>
               </li>
             </ol>
           </div>
-
           <div class="panel" role="tabpanel" id="panel-fire" aria-labelledby="tab-fire" hidden>
-            <ol class="steps">
+            <ol class="steps steps-3">
               <li>
-                <h3>Install Downloader</h3>
-                <p>On the Fire Stick, open the Amazon Appstore and install the free app <strong>Downloader</strong> by AFTVnews.</p>
+                <h3>Get Downloader</h3>
+                <p>Install free <strong>Downloader</strong> from the Amazon Appstore. Allow unknown apps for Downloader in Fire TV settings.</p>
               </li>
               <li>
-                <h3>Allow unknown apps for Downloader</h3>
-                <p>Go to <strong>Settings → My Fire TV → Developer options</strong> (or Apps → Manage Installed Applications). Turn on <strong>Apps from Unknown Sources</strong> for Downloader. Confirm the warning.</p>
+                <h3>Enter the short link</h3>
+                <p>In Downloader, type <code>tytvapp.com/apk</code> and tap Go. That’s the latest TYTV APK.</p>
               </li>
               <li>
-                <h3>Enter the download address</h3>
-                <p>Open Downloader. In the URL box, type this site’s address (once your custom domain is live), or paste:</p>
-                <p class="code-block"><code>https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk</code></p>
-                <p>Tap <strong>Go</strong>, then <strong>Install</strong> when the file finishes. Short path after deploy: <code>/apk</code>.</p>
-              </li>
-              <li>
-                <h3>Open TYTV</h3>
-                <p>Find TYTV under Your Apps. Add your own M3U playlist when prompted. Updates appear the next time you open the app after a new release is published.</p>
+                <h3>Install &amp; add playlist</h3>
+                <p>Tap Install, open TYTV under Your Apps, then add your own M3U playlist.</p>
               </li>
             </ol>
           </div>
@@ -170,48 +262,22 @@
       </div>
     </section>
 
-    <section class="section section-alt" id="features">
+    <!-- Pricing slot reserved for later (not shown; pricing not approved yet) -->
+    <section class="section pricing-slot" id="pricing" hidden aria-hidden="true">
       <div class="wrap">
-        <h2>Built for the 10-foot UI</h2>
-        <p class="section-lede">Designed for a remote and a couch — big focus rings, clear rows, and posters you can read from across the room.</p>
-        <ul class="feature-grid">
-          <li>
-            <span class="feature-icon" aria-hidden="true">📡</span>
-            <h3>Live TV guide</h3>
-            <p>Browse what’s on now and what’s next with a clear grid built for the remote.</p>
-          </li>
-          <li>
-            <span class="feature-icon" aria-hidden="true">🏈</span>
-            <h3>Sports first</h3>
-            <p>Jump straight into games and sports rows without digging through menus.</p>
-          </li>
-          <li>
-            <span class="feature-icon" aria-hidden="true">🎬</span>
-            <h3>Movies &amp; shows</h3>
-            <p>Poster art for movies and series so you can spot what you want fast.</p>
-          </li>
-          <li>
-            <span class="feature-icon" aria-hidden="true">⭐</span>
-            <h3>Favorites</h3>
-            <p>Pin the channels and titles you actually watch.</p>
-          </li>
-          <li>
-            <span class="feature-icon" aria-hidden="true">👤</span>
-            <h3>Profiles</h3>
-            <p>Separate profiles so each person keeps their own home layout and picks.</p>
-          </li>
-          <li>
-            <span class="feature-icon" aria-hidden="true">📋</span>
-            <h3>Your playlist</h3>
-            <p>Works with your M3U playlist URL or file. TYTV is the player — you bring the content.</p>
-          </li>
-        </ul>
+        <div class="section-head">
+          <p class="section-kicker">Pricing</p>
+          <h2>Simple pricing</h2>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="faq">
+    <section class="section section-alt" id="faq">
       <div class="wrap narrow">
-        <h2>FAQ</h2>
+        <div class="section-head">
+          <p class="section-kicker">FAQ</p>
+          <h2>Quick answers</h2>
+        </div>
         <div class="faq">
           <details open>
             <summary>Does TYTV include channels or movies?</summary>
@@ -219,23 +285,19 @@
           </details>
           <details>
             <summary>Is it free?</summary>
-            <p>Yes. Download the APK from GitHub Releases at no charge. Optional tips or future store listings don’t change that the APK here is free.</p>
+            <p>Yes. Download the APK from GitHub Releases at no charge.</p>
           </details>
           <details>
-            <summary>Will Google Play Protect or Amazon warn me?</summary>
-            <p>Sometimes. Sideloaded apps often get a warning. That’s normal. Verify the SHA-256 on this page matches the release notes, then choose Install anyway / Install.</p>
+            <summary>Will Play Protect or Amazon warn me?</summary>
+            <p>Sometimes — that’s normal for sideloaded apps. Verify the SHA-256 on this page, then choose Install anyway.</p>
           </details>
           <details>
             <summary>How do updates work?</summary>
-            <p>New versions are published on GitHub Releases. Open TYTV on the box and it can pick up the update, or download the latest APK from this page again.</p>
+            <p>New versions publish on GitHub Releases. Open TYTV on the box to pick up an update, or download again from this site.</p>
           </details>
           <details>
-            <summary>iPhone / iPad?</summary>
-            <p>This download is for Android TV devices (Onn, Google TV, Fire TV Stick). The iPhone app is separate and distributed through TestFlight / the App Store when available.</p>
-          </details>
-          <details>
-            <summary>Can I use it without a playlist?</summary>
-            <p>You need an M3U playlist to watch anything. The app will open and guide you to add one.</p>
+            <summary>iPhone or iPad?</summary>
+            <p>This download is for Android TV (Onn, Google TV, Fire TV Stick). The iPhone app is separate via TestFlight / the App Store when available.</p>
           </details>
         </div>
       </div>
@@ -243,30 +305,41 @@
 
     <section class="section cta">
       <div class="wrap cta-inner">
-        <h2>Ready to put it on the TV?</h2>
+        <h2>Ready for the living room?</h2>
+        <p class="section-lede cta-lede">Free download. Your playlist. Your TV.</p>
         <a class="btn btn-primary"
            href="https://github.com/smartaislemenu/tytv-app/releases/latest/download/TYTV.apk"
            download>
+          <span class="btn-icon" aria-hidden="true">↓</span>
           Download TYTV.apk
         </a>
-        <p class="fineprint">Latest stable: <span id="rel-version-2">1.2.17</span> ·
+        <p class="fineprint">Latest: <span id="rel-version-2">1.2.17</span> ·
           <a href="https://github.com/smartaislemenu/tytv-app" rel="noopener">Source on GitHub</a>
+          · Short link <a href="/apk/">tytvapp.com/apk</a>
         </p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <p><strong>TYTV</strong> — playlist player for Android TV.</p>
-      <p class="fineprint">
-        Not affiliated with Google, Amazon, Walmart, or any streaming service.
-        No trackers on this site. © <span id="year"></span> TYTV.
-      </p>
-      <p class="fineprint">
+    <div class="wrap footer-grid">
+      <div>
+        <a class="logo footer-logo" href="#top">
+          <img class="logo-img" src="assets/logo-128.webp" width="36" height="36" alt="" decoding="async" loading="lazy">
+          <span class="logo-text">TYTV</span>
+        </a>
+        <p class="fineprint">Playlist player for Android TV. TYTV doesn’t include any channels.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
         <a href="https://github.com/smartaislemenu/tytv-app/releases/latest" rel="noopener">Releases</a>
-        ·
         <a href="https://github.com/smartaislemenu/tytv-app" rel="noopener">GitHub</a>
+      </div>
+      <p class="fineprint footer-legal">
+        Not affiliated with Google, Amazon, Walmart, or any streaming service.
+        No trackers. © <span id="year"></span> TYTV.
       </p>
     </div>
   </footer>

@@ -1,3 +1,5 @@
+**Branch note:** Premium redesign lives on the `redesign` branch until Tyler approves going live.
+
 # TYTV download site
 
 Static one-page site for downloading the TYTV Android TV app (APK).
