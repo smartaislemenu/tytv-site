@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs>
+ <radialGradient id="bg" cx="50%" cy="38%" r="80%"><stop offset="0" stop-color="#0B2A6E"/><stop offset=".6" stop-color="#061433"/><stop offset="1" stop-color="#020716"/></radialGradient>
+ <radialGradient id="pl" cx="36%" cy="30%" r="78%"><stop offset="0" stop-color="#9BEBFF"/><stop offset=".42" stop-color="#1E6BFF"/><stop offset="1" stop-color="#071A55"/></radialGradient>
+ <linearGradient id="txt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6FAFF"/><stop offset=".55" stop-color="#5FD8FF"/><stop offset="1" stop-color="#1E8BFF"/></linearGradient>
+ <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/><circle cx="41" cy="61" r="2.2" fill="#fff" opacity=".75"/><circle cx="435" cy="51" r="1.8" fill="#fff" opacity=".75"/><circle cx="471" cy="420" r="2.2" fill="#fff" opacity=".75"/><circle cx="61" cy="451" r="1.6" fill="#fff" opacity=".75"/><circle cx="369" cy="154" r="1.4" fill="#fff" opacity=".75"/><circle cx="154" cy="41" r="1.4" fill="#fff" opacity=".75"/><circle cx="282" cy="471" r="1.6" fill="#fff" opacity=".75"/><circle cx="486" cy="230" r="1.2" fill="#fff" opacity=".75"/>
+<g transform="translate(46,10) scale(.82)"><g>
+ <ellipse cx="256" cy="250" rx="214" ry="66" fill="none" stroke="#3DC8FF" stroke-width="12" transform="rotate(-20 256 250)" opacity=".3"/>
+ <circle cx="256" cy="250" r="118" fill="url(#pl)" filter="url(#soft)"/>
+ <path d="M228 196 L318 250 L228 304 Z" fill="#fff"/>
+ <path d="M48 314 A214 66 -20 0 0 458 172" fill="none" stroke="#45D4FF" stroke-width="12" stroke-linecap="round" filter="url(#glow)" transform="rotate(0)"/>
+ <circle cx="452" cy="166" r="17" fill="#CFF6FF" filter="url(#glow)"/>
+</g></g>
+<text x="256" y="470" text-anchor="middle" font-family="DejaVu Sans, Arial Black, sans-serif" font-weight="bold" font-size="92" letter-spacing="3.7" fill="url(#txt)" stroke="#9BEBFF" stroke-width="1.1" filter="url(#soft)">TYTV</text></svg>
