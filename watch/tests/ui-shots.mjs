@@ -55,6 +55,7 @@ async function shot(page, name) {
   const home = await page.textContent('#app');
   ok('demo label', /Demo with made-up channels/i.test(home||''));
   ok('demo loaded channels', /Metro Sports/i.test(home||''));
+  ok('featured hero', /Featured/i.test(home||'') && (/Glass Harbor|Metro Sports/i.test(home||'')));
   await shot(page, 'desktop-home.png');
 
   // Try navigate to add via UI
@@ -122,9 +123,31 @@ async function shot(page, name) {
   await page.click('button[data-nav="sports"]');
   await page.waitForTimeout(300);
   await shot(page, 'desktop-sports.png');
-  await page.keyboard.press('ArrowDown');
-  await page.keyboard.press('Enter');
-  await page.waitForTimeout(2000);
+  const playBtn = await page.$('button[data-play-key], button.ch-row, button.card');
+  if (playBtn) await playBtn.click();
+  else {
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+  }
+  await page.waitForTimeout(2500);
+  // Force chrome visible for screenshot / assert player shell
+  await page.evaluate(() => {
+    const c = document.getElementById('playerChrome') || document.querySelector('.player-chrome');
+    if (c) c.classList.add('show');
+  });
+  const playerText = await page.textContent('#app');
+  ok('player shell', /player-screen|Now|Next|Pause|Back/i.test(playerText||'') || !!await page.$('.player-screen'));
+  ok('player channel name', /Metro Sports|Coastal|Harbor|Summit/i.test(playerText||''));
+  const hasVideoOrFallback = await page.evaluate(() => {
+    const v = document.getElementById('playerVideo');
+    const fb = document.getElementById('playerError');
+    const chrome = document.getElementById('playerChrome');
+    const playing = v && v.readyState >= 2 && !v.error;
+    const fallbackVisible = fb && !fb.classList.contains('hidden');
+    const chromeOk = !!chrome;
+    return { playing, fallbackVisible, chromeOk, readyState: v?.readyState, err: v?.error?.message || null };
+  });
+  ok('player not blank', hasVideoOrFallback.chromeOk && (hasVideoOrFallback.playing || hasVideoOrFallback.fallbackVisible), hasVideoOrFallback);
   await shot(page, 'desktop-player.png');
   await page.keyboard.press('Escape');
   await ctx.close();
@@ -141,6 +164,8 @@ async function shot(page, name) {
   await shot(page, 'phone-gate-coming-soon.png');
   await page.goto(base + '?demo=1', { waitUntil: 'networkidle' });
   await page.waitForTimeout(1000);
+  const phoneHome = await page.textContent('#app');
+  ok('phone featured hero', /Featured/i.test(phoneHome||''));
   await shot(page, 'phone-home.png');
   await page.click('button[data-nav="guide"]');
   await page.waitForTimeout(400);

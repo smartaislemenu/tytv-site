@@ -24,7 +24,7 @@ const { channels, epgUrls } = parseM3u(text, 'demo');
 ok('demo channel count', channels.length === 18, channels.length);
 ok('epg url relative', epgUrls.includes('guide.xml'), epgUrls);
 ok('metro sports', channels.some((c) => c.name === 'Metro Sports 1' && c.group === 'Live Sports'));
-ok('no scheme junk skipped', !channels.some((c) => !c.url.includes('://')));
+ok('demo urls are media paths', channels.every((c) => /stream\/|:\/\//.test(c.url)));
 ok('empty playlist', parseM3u('#EXTM3U\n', 'x').channels.length === 0);
 ok('junk lines ignored', parseM3u('#EXTM3U\n#EXTINF:-1,Bad\nnot-a-url\n', 'x').channels.length === 0);
 
@@ -43,7 +43,7 @@ ok('series path', classify('https://x/series/1/1/1.ts', 'Show S01E02') === Type.
 ok('episode parse', parseEpisode('Harbor City S01 E02 Extra')?.season === 1);
 
 const splitDemo = split(channels, 'demo');
-ok('demo all live (bipbop)', splitDemo.live.length === 18 && splitDemo.vod.movies.length === 0);
+ok('demo live + movies', splitDemo.live.length === 12 && splitDemo.vod.movies.length === 6, {live: splitDemo.live.length, movies: splitDemo.vod.movies.length});
 
 const vodish = parseM3u(`#EXTM3U
 #EXTINF:-1 group-title="Movies & Shows",Glass Harbor (2024)

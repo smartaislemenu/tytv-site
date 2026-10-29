@@ -110,6 +110,17 @@ async function loadPlaylistText(text, meta) {
   if (!parsed.channels.length) throw new Error('No channels found in that playlist.');
   if (parsed.channels.length > 100_000) throw new Error('Playlist is too large for the browser (100k+). Use the TV app.');
 
+  // Resolve relative stream / logo URLs (demo playlist uses paths under /watch/demo/)
+  const baseForRel = meta.demo ? DEMO_BASE : (meta.url ? new URL('.', meta.url).href : location.href);
+  for (const c of parsed.channels) {
+    if (c.url && !/^https?:\/\//i.test(c.url) && !c.url.startsWith('blob:')) {
+      c.url = new URL(c.url, meta.demo ? DEMO_BASE : baseForRel).href;
+      c.key = `${c.playlistId}|${c.url}`;
+    }
+    if (c.logo && !/^https?:\/\//i.test(c.logo) && !c.logo.startsWith('data:')) {
+      c.logo = new URL(c.logo, meta.demo ? DEMO_BASE : baseForRel).href;
+    }
+  }
   const { live, vod } = split(parsed.channels, id);
   state.channels = live;
   state.groups = groupChannels(live);
@@ -294,11 +305,11 @@ function onKey(e) {
 
 let chromeTimer;
 function showChrome() {
-  const ov = $('.player-overlay');
-  if (!ov) return;
-  ov.classList.add('show-chrome');
+  const chrome = $('#playerChrome') || $('.player-chrome');
+  if (!chrome) return;
+  chrome.classList.add('show');
   clearTimeout(chromeTimer);
-  chromeTimer = setTimeout(() => ov.classList.remove('show-chrome'), 3500);
+  chromeTimer = setTimeout(() => chrome.classList.remove('show'), 4500);
 }
 
 /* ---------------- player ---------------- */
@@ -310,7 +321,11 @@ async function playChannels(list, index) {
   state.playerError = null;
   render();
   const ch = list[index];
-  if (!ch) return;
+  if (!ch) {
+    state.playerError = 'No channel to play.';
+    syncPlayerFallback();
+    return;
+  }
   state.persist.lastChannelKey = ch.key;
   Store.save(state.persist);
   const video = $('#playerVideo');
@@ -319,7 +334,16 @@ async function playChannels(list, index) {
   const r = await Player.play(ch.url, { userAgent: ch.userAgent });
   if (!r.ok) {
     state.playerError = r.error || "This stream can't play in a browser — use the TV app";
-    renderPlayerError();
+    syncPlayerFallback();
+    showChrome();
+  } else {
+    state.playerError = null;
+    $('#playerPoster')?.classList.add('hidden');
+    syncPlayerFallback();
+    const btn = $('#btnPause');
+    if (btn) btn.textContent = 'Pause';
+    // Keep chrome visible briefly so screenshots / first paint aren't blank
+    showChrome();
   }
 }
 
@@ -375,15 +399,22 @@ function closePlayer() {
   render();
 }
 
-function renderPlayerError() {
+function syncPlayerFallback() {
   const box = $('#playerError');
+  const poster = $('#playerPoster');
+  const video = $('#playerVideo');
   if (!box) return;
   if (state.playerError) {
     box.classList.remove('hidden');
-    box.innerHTML = `<h2>Can't play here</h2><p>${escapeHtml(state.playerError)}</p>
-      <button class="btn btn-primary" type="button" data-act="close-player">Back</button>
-      <p class="hint" style="margin-top:14px">Mixed-content (http on https) and many providers block browser playback. The TV app can still play these.</p>`;
-  } else box.classList.add('hidden');
+    const p = box.querySelector('p');
+    if (p) p.textContent = state.playerError;
+    poster?.classList.add('dim');
+    if (video) video.style.opacity = '0';
+  } else {
+    box.classList.add('hidden');
+    poster?.classList.remove('dim');
+    if (video) video.style.opacity = '1';
+  }
 }
 
 /* ---------------- render ---------------- */
@@ -512,10 +543,27 @@ function renderHome() {
       <div class="hero-copy">
         <div class="eyebrow">${hero.kind === 'SERIES' ? 'Series' : 'Featured'}</div>
         <h2>${escapeHtml(hero.name)}</h2>
-        <p>${escapeHtml(hero.year ? `Made-up demo title · ${hero.year}` : 'From your playlist')}</p>
+        <p>${escapeHtml(hero.year ? `${hero.year}` : 'From your playlist')}</p>
         <div class="hero-actions">
           <button class="btn btn-primary" type="button" data-vod-key="${escapeHtml(hero.key)}">Play</button>
           <button class="btn btn-ghost" type="button" data-nav="movies">Browse movies</button>
+        </div>
+      </div>
+    </div>`;
+  } else if (state.channels.length) {
+    // Featured fallback: spotlight a live channel when no VOD posters (matches TV app always having a hero area)
+    const spotlight = liveSports[0] || favCh[0] || state.channels[0];
+    const art = resolveAsset(spotlight.logo);
+    const prog = programAt(state.epg.get(spotlight.epgKey) || state.epg.get((spotlight.tvgId || '').toLowerCase()), now());
+    heroHtml = `<div class="hero">
+      <div class="hero-art" style="${art ? `background-image:url('${escapeHtml(art)}')` : ''}">${!art ? escapeHtml(letterMark(spotlight.name)) : ''}</div>
+      <div class="hero-copy">
+        <div class="eyebrow">Featured</div>
+        <h2>${escapeHtml(spotlight.name)}</h2>
+        <p>${escapeHtml(prog?.title || spotlight.group)}</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" type="button" data-play-key="${escapeHtml(spotlight.key)}">Play</button>
+          <button class="btn btn-ghost" type="button" data-nav="guide">TV Guide</button>
         </div>
       </div>
     </div>`;
@@ -724,21 +772,64 @@ function renderPlayerShell() {
   const prog = ch
     ? programAt(state.epg.get(ch.epgKey) || state.epg.get((ch.tvgId || '').toLowerCase()), now())
     : null;
-  return `<div class="player-overlay show-chrome" id="playerOverlay">
-    <video id="playerVideo" playsinline controls></video>
-    <div class="player-error hidden" id="playerError"></div>
-    <div class="player-chrome">
-      <div class="player-title">${escapeHtml(ch?.name || '')}</div>
-      <div class="player-sub">${escapeHtml(prog?.title || ch?.group || '')}</div>
-      <div class="player-actions">
-        <button class="btn btn-primary" type="button" data-act="close-player">Back</button>
-        <button class="btn btn-ghost" type="button" data-act="prev-ch">Prev</button>
-        <button class="btn btn-ghost" type="button" data-act="next-ch">Next</button>
-        <button class="btn btn-ghost" type="button" data-fav="${escapeHtml(ch?.key || '')}">Favorite</button>
+  const progs = ch ? (state.epg.get(ch.epgKey) || state.epg.get((ch.tvgId || '').toLowerCase()) || []) : [];
+  let next = null;
+  if (prog) {
+    const i = progs.findIndex((p) => p.start === prog.start && p.stop === prog.stop);
+    if (i >= 0 && i + 1 < progs.length) next = progs[i + 1];
+    else next = progs.find((p) => p.start >= (prog?.stop || now())) || null;
+  } else {
+    next = programAt(progs, now() + 60_000) || progs.find((p) => p.start > now()) || null;
+  }
+  const pct = prog ? Math.round(progress(prog, now()) * 100) : 0;
+  const logo = ch ? resolveAsset(ch.logo) : '';
+  const err = state.playerError;
+  return `<div class="player-screen" id="playerOverlay">
+    <div class="player-stage">
+      <video id="playerVideo" playsinline webkit-playsinline controlsList="nodownload"></video>
+      <div class="player-poster" id="playerPoster" aria-hidden="true" style="${logo ? `background-image:url('${escapeHtml(logo)}')` : ''}"></div>
+      <div class="player-fallback ${err ? '' : 'hidden'}" id="playerError" role="status">
+        <div class="player-fallback-card">
+          <div class="player-fallback-mark">${escapeHtml(letterMark(ch?.name || 'TY'))}</div>
+          <h2>${escapeHtml(ch?.name || 'Playback')}</h2>
+          <p>${escapeHtml(err || "This stream can't play in a browser — use the TV app")}</p>
+          <div class="player-fallback-actions">
+            <button class="btn btn-primary" type="button" data-act="close-player">Back</button>
+            <button class="btn btn-ghost" type="button" data-act="retry-play">Try again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="player-chrome show" id="playerChrome">
+      <div class="player-chrome-top">
+        <button class="btn btn-ghost" type="button" data-act="close-player">← Back</button>
+        <div class="player-chrome-meta">
+          <div class="player-kicker">${escapeHtml(ch?.group || 'Live')}</div>
+          <div class="player-title">${escapeHtml(ch?.name || '')}</div>
+        </div>
+      </div>
+      <div class="player-chrome-bottom">
+        <div class="player-now">
+          <div class="player-now-label">Now</div>
+          <div class="player-now-title">${escapeHtml(prog?.title || 'Playing')}</div>
+          <div class="prog-bar player-prog"><i style="width:${pct}%"></i></div>
+          <div class="player-now-times">${prog ? escapeHtml(formatClock(prog.start) + ' – ' + formatClock(prog.stop)) : ''}</div>
+        </div>
+        <div class="player-next">
+          <div class="player-now-label">Next</div>
+          <div class="player-now-title">${escapeHtml(next?.title || '—')}</div>
+        </div>
+        <div class="player-actions">
+          <button class="btn btn-ghost" type="button" data-act="prev-ch">Prev</button>
+          <button class="btn btn-primary" type="button" data-act="toggle-pause" id="btnPause">Pause</button>
+          <button class="btn btn-ghost" type="button" data-act="next-ch">Next</button>
+          <button class="btn btn-ghost" type="button" data-fav="${escapeHtml(ch?.key || '')}">Favorite</button>
+        </div>
       </div>
     </div>
   </div>`;
 }
+
 
 function renderStatus() {
   let el = $('#statusToast');
@@ -808,10 +899,11 @@ function render() {
     return;
   }
   if (state.screen === 'player') {
-    appRoot.innerHTML = `<div class="app">${renderRail()}<div class="main">${renderPlayerShell()}</div></div>`;
+    appRoot.innerHTML = renderPlayerShell();
     Player.attachVideo($('#playerVideo'));
-    renderPlayerError();
+    syncPlayerFallback();
     bind();
+    showChrome();
     return;
   }
   const showDetail = ['sports', 'favorites', 'all', 'group'].includes(state.screen);
@@ -830,6 +922,9 @@ function render() {
 
 function bind() {
   appRoot.onclick = async (e) => {
+    if (state.screen === 'player' && (e.target.closest('.player-stage') || e.target.id === 'playerVideo')) {
+      showChrome();
+    }
     const t = e.target.closest('[data-nav],[data-act],[data-play-key],[data-vod-key],[data-fav]');
     if (!t) return;
 
@@ -916,6 +1011,17 @@ function bind() {
     }
     if (act === 'close-player') {
       closePlayer();
+      return;
+    }
+    if (act === 'retry-play') {
+      playAt(state.playIndex);
+      return;
+    }
+    if (act === 'toggle-pause') {
+      Player.togglePause();
+      const btn = $('#btnPause');
+      if (btn) btn.textContent = Player.isPaused() ? 'Play' : 'Pause';
+      showChrome();
       return;
     }
     if (act === 'prev-ch') {

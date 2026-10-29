@@ -94,7 +94,12 @@ export function parseM3u(text, playlistId = 'default') {
       }
       continue;
     }
-    if (!line.includes('://')) {
+    // Absolute URLs, or relative media paths (self-hosted demo / local files)
+    const looksMedia =
+      line.includes('://') ||
+      /\.(m3u8|mp4|mkv|avi|mov|m4v|ts|mpd|webm)(\?|#|$)/i.test(line) ||
+      /^(?:\.\.?\/)?stream\//i.test(line);
+    if (!looksMedia) {
       pendingAttrs = null;
       pendingName = '';
       pendingGroup = null;
