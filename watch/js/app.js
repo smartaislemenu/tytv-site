@@ -50,7 +50,7 @@ const state = {
   playerError: null,
   status: '',
   searchQ: '',
-  otpStep: 'email', // email | otp
+  otpStep: 'email', // email | otp | promo
   otpEmail: '',
   addMode: 'm3u', // m3u | xtream
   persist: Store.load(),
@@ -672,7 +672,7 @@ function renderSettings() {
         </select>
       </div>
       <div class="field"><label>Account</label>
-        <div class="hint">${demo ? 'Demo with made-up channels — not a paid unlock.' : License.storedEmail() || 'Not signed in'}</div>
+        <div class="hint">${demo ? 'Demo with made-up channels — not a paid unlock.' : (License.storedEmail() || 'Not signed in')}${(!demo && License.accessEndsLabel()) ? ' · ' + escapeHtml(License.accessEndsLabel()) : (!demo && License.storedEmail() ? ' · Lifetime' : '')}</div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         ${demo ? '' : `<button class="btn btn-primary" type="button" data-nav="add">Add / replace playlist</button>
@@ -743,7 +743,7 @@ function renderGate() {
   return `<div class="gate" role="dialog" aria-labelledby="gateTitle">
     <div class="rail-logo" style="padding-left:0"><span class="mark">TY</span> TYTV Watch</div>
     <h1 id="gateTitle">Unlock to watch</h1>
-    <p class="lede">Same email + one-time code as the TV app. Two devices per email.</p>
+    <p class="lede">Same email + one-time code as the TV app. Browser unlock does not use one of your 5 TV or phone device slots.</p>
     ${
       coming
         ? `<div class="coming"><strong>Coming soon.</strong> Payments and email codes aren't live yet.
@@ -756,7 +756,17 @@ function renderGate() {
              <input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
            <p class="err hidden" id="gateErr"></p>
            <p class="okmsg hidden" id="gateOk"></p>
-           <button class="btn btn-primary" type="button" data-act="request-otp" ${coming ? 'disabled' : ''}>Email me a code</button>`
+           <button class="btn btn-primary" type="button" data-act="request-otp" ${coming ? 'disabled' : ''}>Email me a code</button>
+           <button class="btn btn-ghost" type="button" data-act="show-promo" style="margin-left:8px" ${coming ? 'disabled' : ''}>Have a promo?</button>`
+        : state.otpStep === 'promo'
+        ? `<div class="field"><label for="email">Email</label>
+             <input id="email" type="email" autocomplete="email" placeholder="you@example.com" value="${escapeHtml(state.otpEmail || '')}"></div>
+           <div class="field"><label for="promo">Promo code</label>
+             <input id="promo" class="otp" inputmode="numeric" maxlength="8" placeholder="8-digit code" autocomplete="off"></div>
+           <p class="err hidden" id="gateErr"></p>
+           <p class="okmsg hidden" id="gateOk"></p>
+           <button class="btn btn-primary" type="button" data-act="redeem-promo" ${coming ? 'disabled' : ''}>Apply promo</button>
+           <button class="btn btn-ghost" type="button" data-act="otp-back" style="margin-left:8px">Back</button>`
         : `<div class="field"><label>Code sent to ${escapeHtml(state.otpEmail)}</label>
              <input id="otp" class="otp" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code"></div>
            <p class="err hidden" id="gateErr"></p>
@@ -1007,6 +1017,44 @@ function bind() {
       render();
       return;
     }
+    if (act === 'show-promo') {
+      state.otpStep = 'promo';
+      render();
+      return;
+    }
+    if (act === 'redeem-promo') {
+      const email = $('#email')?.value || '';
+      const code = $('#promo')?.value || '';
+      const err = $('#gateErr');
+      const ok = $('#gateOk');
+      err?.classList.add('hidden');
+      ok?.classList.add('hidden');
+      const r = await License.redeemPromo(email, code);
+      if (!r.ok) {
+        if (err) {
+          err.textContent = r.message || r.error;
+          err.classList.remove('hidden');
+        }
+        return;
+      }
+      state.otpEmail = License.normalizeEmail(email) || email;
+      if (ok) {
+        ok.textContent = r.message || 'Promo applied. Request a one-time code next.';
+        ok.classList.remove('hidden');
+      }
+      // After promo, send OTP automatically
+      const otpR = await License.requestOtp(email);
+      if (!otpR.ok) {
+        if (err) {
+          err.textContent = otpR.message || otpR.error;
+          err.classList.remove('hidden');
+        }
+        return;
+      }
+      state.otpStep = 'otp';
+      render();
+      return;
+    }
     if (act === 'otp-back') {
       state.otpStep = 'email';
       render();
@@ -1189,6 +1237,24 @@ function bind() {
 
 /* ---------------- boot ---------------- */
 
+function lockToGate(message) {
+  state.unlocked = false;
+  state.otpStep = 'email';
+  state.screen = 'gate';
+  if (message) toast(message);
+  render();
+}
+
+function startLicenseWatch() {
+  License.heartbeat();
+  setInterval(() => License.heartbeat(), 5 * 60_000);
+  setInterval(async () => {
+    if (License.isDemoMode() || !state.unlocked) return;
+    const r = await License.recheckLicense();
+    if (!r.ok) lockToGate(r.message || 'Sign in again.');
+  }, License.RECHECK_INTERVAL_MS);
+}
+
 async function boot() {
   document.addEventListener('keydown', onKey);
   License.deviceId();
@@ -1213,13 +1279,24 @@ async function boot() {
     return;
   }
 
+  // Forged unlocked flag without a session_token fails isUnlocked(); still recheck if present.
   if (License.isUnlocked()) {
+    const r = await License.recheckLicense();
+    if (!r.ok) {
+      lockToGate(r.message || 'Sign in with your email and code.');
+      return;
+    }
     state.unlocked = true;
     state.screen = 'add';
     render();
-    License.heartbeat();
-    setInterval(() => License.heartbeat(), 5 * 60_000);
+    startLicenseWatch();
     return;
+  }
+
+  // Clear any half-forged prefs (unlocked without token).
+  if (!License.isUnlocked()) {
+    const raw = (() => { try { return JSON.parse(localStorage.getItem('tytv_web_license') || '{}'); } catch { return {}; } })();
+    if (raw.unlocked && !raw.session_token) License.clearLocal();
   }
 
   state.unlocked = false;
